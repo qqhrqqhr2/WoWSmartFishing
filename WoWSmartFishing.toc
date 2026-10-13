@@ -17,6 +17,7 @@
 ## IconTexture: Interface\AddOns\WoWSmartFishing\Media\icon
 ## X-Website: https://github.com/qqhrqqhr2/WoWSmartFishing
 ## X-Donate: https://buymeacoffee.com/qqhrqqhr2
+## X-Curse-Project-ID: 1743389
 ## AddonCompartmentFunc: WoWSmartFishing_OnAddonCompartmentClick
 
 Locales.lua

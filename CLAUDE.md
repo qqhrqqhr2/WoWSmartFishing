@@ -1,6 +1,6 @@
 # WoW Smart Fishing
 
-WoW Forever addon (Interface 16001). Release: put a new `## vX.Y.Z` heading at the top of `CHANGELOG.md` and push it to main (the workflow tags the commit and runs BigWigsMods/packager), or push a `v*` tag. Only release when the user asks for it after testing in game.
+WoW Forever addon (Interface 16001). CurseForge project 1743389. Release: put a new `## vX.Y.Z` heading at the top of `CHANGELOG.md` and push it to main (the workflow tags the commit and runs BigWigsMods/packager), or push a `v*` tag. Only release when the user asks for it after testing in game.
 
 ## Rules
 
