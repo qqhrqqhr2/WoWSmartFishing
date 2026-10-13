@@ -1,0 +1,54 @@
+name: Release
+on:
+  push:
+    tags:
+      - 'v*'
+    # A new "## vX.Y.Z" heading at the top of CHANGELOG.md on main releases
+    # that version: the job tags the commit itself, then packages.
+    branches:
+      - main
+    paths:
+      - CHANGELOG.md
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      CF_API_KEY: ${{ secrets.CF_API_KEY }}
+      GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # pushed tag: the usual packager run
+      - uses: BigWigsMods/packager@v2
+        if: github.ref_type == 'tag'
+
+      # CHANGELOG change on main: release the top version if not released yet
+      - name: Tag the CHANGELOG version
+        id: tag
+        if: github.ref_type == 'branch'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ver=$(grep -m1 -oE '^## v[0-9]+\.[0-9]+\.[0-9]+' CHANGELOG.md | cut -c4-)
+          if [ -z "$ver" ]; then echo "No version heading in CHANGELOG.md"; echo "skip=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if gh release view "$ver" >/dev/null 2>&1; then
+            echo "$ver already released"; echo "skip=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if ! git rev-parse -q --verify "refs/tags/$ver" >/dev/null; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag -a "$ver" -m "$ver"
+            git push origin "$ver"
+          fi
+          git checkout -q "$ver"
+          echo "Releasing $ver"
+      - name: Package and upload
+        if: github.ref_type == 'branch' && steps.tag.outputs.skip != 'true'
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/release.sh" https://raw.githubusercontent.com/BigWigsMods/packager/v2/release.sh
+          # run as a manual build: the packager skips branch pushes that carry a tag
+          GITHUB_EVENT_NAME=workflow_dispatch bash "$RUNNER_TEMP/release.sh"

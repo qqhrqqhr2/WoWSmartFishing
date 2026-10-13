@@ -1,0 +1,14 @@
+WoW Smart Fishing - credits
+
+Built-in fishing data (Data.lua) is generated from original World of Warcraft 1.12
+server data and is distributed under GPL-3.0:
+
+- Zone fishing loot, fishing skill levels and fish school spawns:
+  vmangos world database (https://github.com/vmangos), derived from the
+  CMaNGOS classic database (https://github.com/cmangos/classic-db, GPL-3.0)
+- WoW Forever map numbers and zone relationships: QuestieDB
+  (https://github.com/Questie/QuestieDB)
+- Classic world map bounds: Questie (https://github.com/Questie/Questie)
+
+World of Warcraft content and materials are trademarks and copyrights of
+Blizzard Entertainment. This addon is not affiliated with Blizzard.

@@ -1,0 +1,13 @@
+package-as: WoWSmartFishing
+
+manual-changelog:
+  filename: CHANGELOG.md
+  markup-type: markdown
+
+ignore:
+  - README.md
+  - CURSEFORGE_DESCRIPTION.md
+  - CLAUDE.md
+  - .github
+  - tools
+  - .gitignore

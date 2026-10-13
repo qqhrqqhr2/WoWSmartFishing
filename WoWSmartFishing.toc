@@ -1,0 +1,41 @@
+## Interface: 16001
+## Title: WoW Smart Fishing
+## Title-koKR: 스마트 낚시 (WoW Smart Fishing)
+## Title-zhTW: 智慧釣魚 (WoW Smart Fishing)
+## Notes: One-button fishing, auto lure and gear, session stats, catch journal, fishing spots and fish schools on the world map, shared with your guild and party.
+## Notes-koKR: 원버튼 낚시, 자동 미끼·장비, 세션 기록, 낚시 도감, 물고기별 낚시 지점과 물고기 떼 위치를 세계지도에 표시하고 길드·파티와 공유합니다.
+## Notes-zhTW: 一鍵釣魚、自動魚餌與裝備、時段統計、釣魚圖鑑，在世界地圖上顯示各魚種釣點與魚群，並與公會、隊伍分享。
+## Notes-deDE: Ein-Tasten-Angeln, automatischer Köder und Ausrüstung, Sitzungswerte, Angelkatalog, Angelplätze und Fischschwärme auf der Weltkarte, geteilt mit Gilde und Gruppe.
+## Notes-frFR: Pêche à une touche, appât et équipement automatiques, statistiques de session, catalogue, points de pêche et bancs sur la carte du monde, partagés avec guilde et groupe.
+## Notes-esES: Pesca con una tecla, cebo y equipo automáticos, estadísticas de sesión, catálogo, puntos de pesca y bancos en el mapa del mundo, compartidos con hermandad y grupo.
+## Notes-esMX: Pesca con una tecla, cebo y equipo automáticos, estadísticas de sesión, catálogo, puntos de pesca y bancos en el mapa del mundo, compartidos con hermandad y grupo.
+## Author: qqhrqqhr2
+## Version: @project-version@
+## Category: Professions
+## X-License: GPL-3.0
+## SavedVariables: WoWSmartFishingDB
+## IconTexture: Interface\AddOns\WoWSmartFishing\Media\icon
+## X-Website: https://github.com/qqhrqqhr2/WoWSmartFishing
+## X-Donate: https://buymeacoffee.com/qqhrqqhr2
+## AddonCompartmentFunc: WoWSmartFishing_OnAddonCompartmentClick
+
+Locales.lua
+Core.lua
+Style.lua
+Widgets.lua
+Data.lua
+Fishing.lua
+Gear.lua
+Log.lua
+Expected.lua
+Tooltip.lua
+Share.lua
+MapPins.lua
+Pins.xml
+MapLegend.lua
+MapButton.lua
+HUD.lua
+Window.lua
+Minimap.lua
+Donate.lua
+Options.lua
