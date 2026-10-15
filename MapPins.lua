@@ -19,6 +19,8 @@ local SIZE = { own = 20, shared = 18, pool = 18, zone = 26 }
 WoWSmartFishingPinMixin = CreateFromMixins(MapCanvasPinMixin)
 
 function WoWSmartFishingPinMixin:OnLoad()
+    -- 핀 템플릿의 OnLoad와 지도(AcquirePin)가 둘 다 불러서 두 번 오므로 한 번만 만듦
+    if self.Label then return end
     self:UseFrameLevelType("PIN_FRAME_LEVEL_AREA_POI")
     self:SetScalingLimits(1, 1.0, 1.3)
     S:Round(self, self.Ring)

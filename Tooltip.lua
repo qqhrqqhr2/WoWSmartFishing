@@ -7,7 +7,7 @@ local MAX_ZONES = 3
 local function Add(tooltip, data)
     if not ns.settings or not ns.settings.itemTooltip then return end
     if tooltip ~= GameTooltip and tooltip ~= ItemRefTooltip then return end
-    local itemID = data and data.id
+    local itemID = data and ns.Num(data.id) -- 보호된 값(secret)이면 건너뜀
     if not itemID then return end
 
     local zones = ns:ZonesForFish(itemID)

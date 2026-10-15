@@ -237,6 +237,7 @@ end
 -- zoneID 지도의 사각형이 mapID 지도에서 차지하는 범위 (하위 지역일 때만)
 local rectCache = {}
 function ns:ChildRect(zoneID, mapID)
+    if not zoneID or not mapID then return nil end -- 지도 번호를 못 얻었을 때
     if zoneID == mapID or not IsAncestor(zoneID, mapID) then return nil end
     local key = zoneID .. ":" .. mapID
     local r = rectCache[key]
