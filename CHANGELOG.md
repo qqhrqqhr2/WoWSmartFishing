@@ -1,6 +1,6 @@
 # WoW Smart Fishing
 
-## Unreleased
+## v1.0.0
 
 - One-button fishing: one key casts and reels in (bobber detection with a mouse-over fallback), auto lure and auto loot
 - Session panel while a pole is equipped: skill, lure timer, casts, catches, success rate, catches per hour, Stop fishing button
