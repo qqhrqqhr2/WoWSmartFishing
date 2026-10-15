@@ -10,16 +10,40 @@ function ns:SetFishFilter(itemID)
     ns:Fire("AM_SETTINGS_CHANGED", "filterFish")
 end
 
+-- 전투 중에 애드온이 세계지도를 열거나 다른 지도로 바꾸면, 그때 지도가 새로 만드는
+-- 블리자드 핀들까지 애드온 코드로 취급돼 ADDON_ACTION_BLOCKED 오류가 난다.
+-- 그래서 전투 중에는 지도를 움직이지 않고, 전투가 끝나면 마지막 요청을 처리한다.
+local pendingMap
+
+local function MoveMap(mapID, open)
+    if open and not WorldMapFrame:IsShown() then
+        if OpenWorldMap then OpenWorldMap(mapID) else ToggleWorldMap() end
+    end
+    if mapID and WorldMapFrame:IsShown() then WorldMapFrame:SetMapID(mapID) end
+end
+
+-- open = true: 지도가 닫혀 있으면 연다 / 아니면 열려 있을 때만 지도를 바꾼다
+function ns:GoToMap(mapID, open)
+    if InCombatLockdown() then
+        pendingMap = { mapID = mapID, open = open }
+        return
+    end
+    MoveMap(mapID, open)
+end
+
+ns:On("PLAYER_REGEN_ENABLED", function()
+    local p = pendingMap
+    pendingMap = nil
+    if p then MoveMap(p.mapID, p.open) end
+end)
+
 function ns:ShowFishOnMap(itemID, mapID)
     ns:SetFishFilter(itemID)
     if not ns.settings.showPins then
         ns.settings.showPins = true
         ns:Fire("AM_SETTINGS_CHANGED", "showPins")
     end
-    if not WorldMapFrame:IsShown() then
-        if OpenWorldMap then OpenWorldMap(mapID) else ToggleWorldMap() end
-    end
-    if mapID then WorldMapFrame:SetMapID(mapID) end
+    ns:GoToMap(mapID, true)
 end
 
 local function CurrentMapID()
@@ -117,7 +141,7 @@ local function OpenMenu(owner)
                     local text = ICON:format(ns:ItemIcon(e.id)) .. ns:ItemName(e.id) .. "  |cff8c94a3" .. string.format("%.0f%%", e.pct) .. "|r"
                     sub:CreateRadio(text, IsSelected, function(id)
                         ns:SetFishFilter(id)
-                        WorldMapFrame:SetMapID(c.continent)
+                        ns:GoToMap(c.continent)
                     end, e.id)
                 end
             end

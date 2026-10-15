@@ -185,7 +185,7 @@ function ns:UpdateMapLegend()
                         icon = ns:ItemIcon(filter),
                         name = ns:MapName(z.mapID) .. ((zd and zd.s) and ("  |cff8c94a3" .. zd.s .. "|r") or ""),
                         pct = Pct(z.pct),
-                        onClick = function() WorldMapFrame:SetMapID(z.mapID) end,
+                        onClick = function() ns:GoToMap(z.mapID) end,
                     }
                 end
             end

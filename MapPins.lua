@@ -137,11 +137,20 @@ function WoWSmartFishingPinMixin:OnMouseLeave()
     GameTooltip:Hide()
 end
 
+-- 지도는 핀을 꺼낼 때마다 SetPassThroughButtons("RightButton")를 불러
+-- 핀 위 우클릭이 지도로 넘어가(지도 축소) 하게 한다. 이 함수는 전투 중에
+-- 애드온 코드에서 불리면 막히는 보호 함수라 ADDON_ACTION_BLOCKED 오류가 난다.
+-- 전투 중에는 건너뛴다 (재사용 핀은 전투 전 설정이 그대로 남아 있음).
+function WoWSmartFishingPinMixin:SetPassThroughButtons(...)
+    if InCombatLockdown() then return end
+    getmetatable(self).__index.SetPassThroughButtons(self, ...)
+end
+
 -- 마우스 올리기/떼기/클릭은 지도(MapCanvas)가 직접 연결해서
 -- OnMouseEnter / OnMouseLeave / OnMouseClickAction 을 불러줌
 function WoWSmartFishingPinMixin:OnMouseClickAction(button)
     if button == "LeftButton" and self.entry and self.entry.child then
-        self:GetMap():SetMapID(self.entry.mapID)
+        ns:GoToMap(self.entry.mapID)
     end
 end
 
