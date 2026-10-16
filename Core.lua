@@ -25,7 +25,7 @@ local DEFAULTS = {
     showLegend = true,  -- 세계지도에 일반 낚시 어종 목록 표시
     itemTooltip = true, -- 아이템 툴팁에 잡히는 곳 표시
     language = "auto",  -- 애드온 언어 (auto = 게임 언어)
-    legendCollapsed = false, -- 어종 목록 접힘
+    legendCollapsed = true, -- 어종 목록은 처음에 접힘
     shareCatches = true, -- 낚을 때 길드/파티에 위치 공유
     receiveShared = true, -- 다른 플레이어가 공유한 위치 받기
     showShared = true,  -- 공유받은 위치 지도에 표시
