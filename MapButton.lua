@@ -55,21 +55,21 @@ local function UpdateLabel()
     local filter = ns.settings.filterFish
     if not ns.settings.showPins then
         button.icon:SetTexture(S.ICON_INNER)
-        button.label:SetText(L["낚시 지점 보기"])
+        button.label:SetText("")
         button.label:SetTextColor(unpack(S.muted))
     elseif filter then
         button.icon:SetTexture(ns:ItemIcon(filter))
-        button.label:SetText(ns:ItemName(filter, true))
+        button.label:SetText("")
         local mapID = CurrentMapID()
         local here = ns:FishOnMap(mapID)[filter] or ns:ExpectedOnMap(mapID)[filter]
         button.label:SetTextColor(unpack(here and S.text or S.muted))
     else
         button.icon:SetTexture(S.ICON_INNER)
-        button.label:SetText(L["모든 물고기"])
+        button.label:SetText("")
         button.label:SetTextColor(unpack(S.text))
     end
-    button:SetWidth(math.min(220, button.label:GetStringWidth() + 38))
-    button.clear:SetShown(filter ~= nil and ns.settings.showPins)
+    button:SetSize(26, 26)
+    button.clear:Hide()
 end
 ns.UpdateMapButton = UpdateLabel
 
@@ -192,18 +192,19 @@ local function CreateButton()
     local container = WorldMapFrame:GetCanvasContainer()
     local b = CreateFrame("Button", "WoWSmartFishingMapButton", container, "BackdropTemplate")
     S:Panel(b)
-    b:SetHeight(26)
+    b:SetSize(26, 26)
     b:SetFrameLevel(container:GetFrameLevel() + 500)
     b:RegisterForDrag("LeftButton")
     b:SetClampedToScreen(true)
 
     b.icon = b:CreateTexture(nil, "ARTWORK")
-    b.icon:SetSize(18, 18)
-    b.icon:SetPoint("LEFT", 5, 0)
+    b.icon:SetSize(20, 20)
+    b.icon:SetPoint("CENTER", 0, 0)
     S:Round(b, b.icon)
 
     b.label = S:Text(b, 12)
     b.label:SetPoint("LEFT", b.icon, "RIGHT", 7, 0)
+    b.label:Hide()
 
     -- 선택 해제(×) 버튼: 물고기를 골랐을 때만
     b.clear = CreateFrame("Button", nil, b, "BackdropTemplate")
@@ -236,8 +237,8 @@ local function CreateButton()
         GameTooltip:SetOwner(self, "ANCHOR_BOTTOM")
         GameTooltip:AddLine("WoW Smart Fishing", 0.27, 0.78, 0.88)
         GameTooltip:AddLine(L["물고기별 낚시 지점"], 1, 1, 1)
-        GameTooltip:AddLine(L["왼쪽 클릭: 물고기 고르기"], unpack(S.muted))
-        GameTooltip:AddLine(L["오른쪽 클릭: 목록 접기/펴기"], unpack(S.muted))
+        GameTooltip:AddLine(L["왼쪽 클릭: 목록 접기/펴기"], unpack(S.muted))
+        GameTooltip:AddLine(L["오른쪽 클릭: 물고기 고르기"], unpack(S.muted))
         GameTooltip:AddLine(L["마우스 휠: 다음 물고기"], unpack(S.muted))
         GameTooltip:AddLine(L["끌기: 위치 옮기기"], unpack(S.muted))
         GameTooltip:Show()
@@ -248,7 +249,7 @@ local function CreateButton()
     end)
     b:RegisterForClicks("LeftButtonUp", "RightButtonUp")
     b:SetScript("OnClick", function(self, mouse)
-        if mouse == "RightButton" then
+        if mouse == "LeftButton" then
             ns.settings.legendCollapsed = not ns.settings.legendCollapsed
             ns:UpdateMapLegend()
         else
