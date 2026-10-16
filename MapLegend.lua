@@ -217,6 +217,7 @@ function ns:UpdateMapLegend()
     end
 
     local collapsed = set.legendCollapsed
+    if collapsed then legend:Hide() return end
     legend.toggle:SetText(collapsed and "+" or "-")
     legend.sub:SetShown(not collapsed)
     legend.line:SetShown(not collapsed)
